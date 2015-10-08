@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div ng-controller="chatController">
+        <input type="text" id="message" />
+        <input type="button" id="sendmessage" value="Send" />
+        <input type="hidden" id="displayname" />
+        <ul id="allMessages"></ul>
+    </div>
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/signalr/jquery.signalr.js"></script>
+    <!-- this is very important!! this is how signalr glue up!!!!!! -->
+    <script src='signalr/js'></script>
+
+    <script src="lib/angular/angular.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
