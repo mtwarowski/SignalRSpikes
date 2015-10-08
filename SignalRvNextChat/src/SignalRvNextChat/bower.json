@@ -1,0 +1,7 @@
+{
+	"name": "ASP.NET",
+	"private": true,
+  "dependencies": {
+    "signalr": "2.0.2"
+  }
+}

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <input type="text" id="message" />
+        <input type="button" id="sendmessage" value="Send" />
+        <input type="hidden" id="displayname" />
+        <ul id="allMessages"></ul>
+    </div>
+
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/signalr/jquery.signalr-2.0.2.js"></script>
+    <!-- this is very important!! this is how signalr glue up!!!!!! -->
+    <script src='/signalr/js'></script>
+    <script type="text/javascript">
+        $(function () {
+
+            var chat = $.connection.chatHub;
+            chat.client.reciveMessage = function (user) {
+                var encodedName = $('<div />').text(user.name).html();
+                var encodedMsg = $('<div />').text(user.message).html();
+                $('#allMessages').append('<li><strong>' + encodedName
+                    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+            };
+
+            $('#displayname').val(prompt('Enter your name:', ''));
+
+            $('#message').focus();
+
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+                    chat.server.send($('#displayname').val(), $('#message').val());
+                    $('#message').val('').focus();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
