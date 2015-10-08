@@ -6,10 +6,12 @@
 </head>
 <body>
     <div ng-controller="chatController">
-        <input type="text" id="message" />
+        <input type="text" id="message" autofocus required ng-model="message" />
         <input type="button" id="sendmessage" value="Send" />
-        <input type="hidden" id="displayname" />
-        <ul id="allMessages"></ul>
+        <!--<input type="hidden" id="displayname" />-->
+        <ul id="allMessages">            
+            <li ng-repeat="post in posts">{{post.name}} : {{post.message}}</li>
+        </ul>
     </div>
     <script src="lib/jquery/dist/jquery.js"></script>
     <script src="lib/signalr/jquery.signalr.js"></script>

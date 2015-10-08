@@ -5,24 +5,22 @@
 
 
     var chatController = function ($scope) {
-
+        $scope.posts = [];
+        $scope.message = '';
         var chat = $.connection.chatHub;
-        chat.client.reciveMessage = function (user) {
-            var encodedName = $('<div />').text(user.name).html();
-            var encodedMsg = $('<div />').text(user.message).html();
-            $('#allMessages').append('<li><strong>' + encodedName
-                + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+        chat.client.reciveMessage = function (post) {
+            
+            $scope.$apply(function() {
+                $scope.posts.push(post);
+            });
         };
 
-        $('#displayname').val(prompt('Enter your name:', ''));
-
-        $('#message').focus();
+        $scope.displayname = prompt('Enter your name:', '');
 
         $.connection.hub.start().done(function () {});
 
         $('#sendmessage').click(function () {
-            chat.server.send($('#displayname').val(), $('#message').val());
-            $('#message').val('').focus();
+            chat.server.send($scope.displayname, $scope.message);
         });
     };
 
