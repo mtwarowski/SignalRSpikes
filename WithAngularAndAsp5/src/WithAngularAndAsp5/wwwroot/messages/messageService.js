@@ -7,9 +7,7 @@
         var sendMessage = function (displayName, message) {
             chatHub.server.send(displayName, message);
         };
-
-        var onReciveMessageCallback;
-
+        
         chatHub.client.reciveMessage = function (message) {
             $rootScope.$emit("onReciveMessageCallback",message);
         };

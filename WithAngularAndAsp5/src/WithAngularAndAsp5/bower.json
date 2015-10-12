@@ -3,6 +3,7 @@
 	"private": true,
   "dependencies": {
     "signalr": "2.2.0",
-    "angular": "1.4.7"
+    "angular": "1.4.7",
+    "angular-route": "1.4.7"
   }
 }

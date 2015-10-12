@@ -1,0 +1,10 @@
+﻿<div ng-controller="messageController">
+    <form ng-submit="sendMessage()">
+        <input type="text" id="message" autofocus required ng-model="message" />
+        <input type="submit" value="Send" />
+    </form>
+
+    <ul>
+        <li ng-repeat="post in posts">{{post.name}} : {{post.message}}</li>
+    </ul>
+</div>

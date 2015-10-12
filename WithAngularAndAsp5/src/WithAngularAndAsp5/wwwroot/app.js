@@ -1,35 +1,25 @@
 ﻿(function () {
     'use strict';
 
-    var app = angular.module('app', []);
+    var app = angular.module('app', ["ngRoute"]);
 
     $.connection.hub.start().done(function () { });
 
     app.value('chatHub', $.connection.chatHub);
 
-    var chatController = function ($scope,$rootScope, messageService) {
-        $scope.posts = [];
-        $scope.message = '';
-
-
-        $scope.displayname = prompt('Enter your name:', '');
-
-        var onReciveMessage = function (post) {            
-            $scope.$apply(function() {
-                $scope.posts.push(post);
+    app.run([
+        '$rootScope', function ($rootScope, security) {
+            $rootScope.$on('$routeChangeStart', function (event, currRoute, prevRoute) {
+                $.connection.hub.stop();
             });
-        };
-        
-        var sendMessage = function () {
-            messageService.sendMessage($scope.displayname, $scope.message);
-        };
+        }]);
 
-        $scope.$parent.$on("onReciveMessageCallback", function (e, message) {
-                onReciveMessage(message)
-        });
-
-        $scope.sendMessage = sendMessage;
-    };
-
-    app.controller('chatController', ['$scope', '$rootScope', 'messageService', chatController]);
+    app.config(function ($routeProvider) {
+        $routeProvider
+        .when("/main", {
+            templateUrl: "messages/messageTmpl.html",
+            controller: "messageController"
+        })
+        .otherwise({redirectTo:"/main"});
+    });
 })();
